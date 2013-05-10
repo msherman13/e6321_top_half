@@ -1,0 +1,26 @@
+20020005               //main:   addi $2, $0, 5          # initialize $2 = 5     			 0
+2003000c               //        addi $3, $0, 12         # initialize $3 = 12     			 4
+20020005               //main:   addi $2, $0, 5          # initialize $2 = 5     			 8
+2003000c               //        addi $3, $0, 12         # initialize $3 = 12     			 c		
+f8000008               //                                # loadstartaddress from [8] = 0x0               10
+f400000c               //                                # loaddatasize from [c] = 0xac44                14
+fc000001               //                                # stalling                			 18
+2067fff7               //        addi $7, $3, -9         # initialize $7 = 3    			 1c
+00e22025               //        or   $4, $7, $2         # $4 <= 3 or 5 = 7     			 20
+00642824               //        and  $5, $3, $4         # $5 <= 12 and 7 = 4   			 24    
+00a42820               //        add  $5, $5, $4         # $5 = 4 + 7 = 11       			 28
+10a7000a               //        beq  $5, $7, end        # shouldn't be taken    			 2c
+0064202a               //        slt  $4, $3, $4         # $4 = 12 < 7 = 0       			 30
+10800001               //        beq  $4, $0, around     # should be taken       			 34
+20050000               //        addi $5, $0, 0          # shouldn't happen      			 38
+00e2202a               //around: slt  $4, $7, $2         # $4 = 3 < 5 = 1        			 3c
+00853820               //        add  $7, $4, $5         # $7 = 1 + 11 = 12      			 40
+f8000000               //                                # loadstartaddress from [0] = 0xac45            44
+f4000004               //                                # loaddatasize from [1] = 0xac44                48
+fc000002               //                                # stalling                			 4c
+00e23822               //        sub  $7, $7, $2         # $7 = 12 - 5 = 7       			 50
+ac670044               //        sw   $7, 68($3)         # [80] = 7              			 54
+8c020050               //        lw   $2, 80($0)         # $2 = [80] = 7         			 58
+08000019               //        j    end                # should be taken       			 5c
+20020001               //        addi $2, $0, 1          # shouldn't happen      			 60
+ac020054               //end:    sw   $2, 84($0)         # write adr 84 = 7      			 64     
