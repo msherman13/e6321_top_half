@@ -21,6 +21,6 @@ module filt_address_calc (offset, filesize, enable, pause, clk, addr, done);
 
 	counter1 counter (.filesize(filesize),.enable(enable), .pause(pause), .clk(clk),.count(count), .done(done));
 	
-	adder32b adder (.a(offset), .b(count), .clk(clk), .s(addr));
+	adder32b adder (.a(offset), .b(count), .s(addr));
 	
 endmodule

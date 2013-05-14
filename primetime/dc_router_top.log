@@ -1,0 +1,945 @@
+
+                            PrimeTime (R)
+                           PrimeTime (R) SI
+                           PrimeTime (R) PX
+                           PrimeTime (R) VX
+             Version B-2008.06 for linux -- May 23, 2008
+              Copyright (c) 1988-2008 by Synopsys, Inc.
+                         ALL RIGHTS RESERVED
+
+This program is proprietary and confidential information of Synopsys, Inc.
+and may be used and disclosed only as authorized in a license agreement
+controlling such use and disclosure.
+
+# Written by mgseok, May 08
+#################################################
+# ST45nm Library information from .lib file     #
+#  time_unit : "1ns";                           #
+#  voltage_unit : "1V";                         #
+#  current_unit : "1mA";                        # 
+#  pulling_resistance_unit : "1kohm";           #
+#  capacitive_load_unit(1,pf);                  #
+#  default_cell_leakage_power : 4.89642e-08;    #
+#  default_fanout_load : 1;                     # 
+#  default_inout_pin_cap : 0.01;                #
+#  default_input_pin_cap : 0.01;                #
+#  default_leakage_power_density : 3.46968e-08; #
+#  default_max_fanout : 20;                     # 
+#  default_output_pin_cap : 0;                  #
+#  default_wire_load_mode : "enclosed";         #
+#  leakage_power_unit : "1mW";                  # 
+#################################################
+## Global lfsr1es
+set sh_enable_page_mode true
+false
+set power_enable_analysis true
+true
+set true_delay_prove_false_backtrack_limit 1000 
+1000
+set true_delay_prove_true_backtrack_limit 1000 
+1000
+## Setting files/paths
+set verilog_files {dc_router_top.nophycell.v}
+dc_router_top.nophycell.v
+set spef_files {dc_router_top.spef}
+dc_router_top.spef
+set my_toplevel dc_router_top
+dc_router_top
+set search_path ". ../dc_shell_cmrf8sf/ /tools2/courses/ee6321/share/ibm13rflpvt/synopsys/"
+. ../dc_shell_cmrf8sf/ /tools2/courses/ee6321/share/ibm13rflpvt/synopsys/
+set link_path "* scx3_cmos8rf_lpvt_tt_1p2v_25c.db" 
+* scx3_cmos8rf_lpvt_tt_1p2v_25c.db
+## Read design
+read_db "scx3_cmos8rf_lpvt_tt_1p2v_25c.db"
+Loading db file '/tools2/courses/ee6321/share/ibm13rflpvt/synopsys/scx3_cmos8rf_lpvt_tt_1p2v_25c.db'
+1
+read_verilog $verilog_files
+Loading verilog file '/home/user4/spring13/ms4543/E6321/Project/data_control_router_rtl/primetime/dc_router_top.nophycell.v'
+1
+link_design -keep_sub_designs $my_toplevel
+Linking design dc_router_top...
+Information: 369 (70.02%) library cells are unused in library scx3_cmos8rf_lpvt_tt_1p2v_25c.....
+Information: total 369 library cells are unused.
+Information: Issuing set_operating_conditions for setting analysis mode on_chip_variation. (PTE-037)
+set_operating_conditions -analysis_type on_chip_variation  -library [get_libs {scx3_cmos8rf_lpvt_tt_1p2v_25c.db:scx3_cmos8rf_lpvt_tt_1p2v_25c}] 
+Design 'dc_router_top' was successfully linked.
+1
+#read_parasitics -keep_capacitive_coupling $spef_files
+## Timing Constraint: Clock
+#Propagated clock used for gated clocks only
+set clk_period 20
+20
+set clk_uncertainty 1
+1
+set clk_transition 1   
+1
+if {[sizeof_collection [get_ports clk]] > 0} {
+  set clk_name "clk"
+  set clk_port "clk"
+  create_clock -name $clk_name -period $clk_period [get_ports $clk_port]
+}
+1
+#set clk_name "clk"
+#create_clock -period $clk_period -name $clk_name 
+set_clock_uncertainty $clk_uncertainty [get_clocks $clk_name]
+1
+set_clock_transition $clk_transition [get_clocks $clk_name]
+1
+#set_clock_latency -max 5.5 $clock
+#set_clock_transition -min 0.25 $clock
+#set_clock_gating_check -setup 0.5 -hold 0.1 $clock
+## Timing Constraint: Input delay or output delay 
+set mydelay 1.5
+1.5
+set_input_delay $mydelay -clock $clk_name [all_inputs] -add_delay
+Warning: Setting input delay on clock port 'clk'. This will not be supported in future releases. (UITE-303)
+1
+remove_input_delay -clock $clk_name [find port $clk_name]
+1
+set_output_delay $mydelay -clock $clk_name [all_outputs]
+1
+## Setting minimum pulse width allowed
+set_min_pulse_width 0.005 
+1
+## Setting driving buffer and output cap
+#set_driving_cell -lib_cell HS65_GS_IVX9 [all_inputs]
+set_load 0.060 [all_outputs]
+1
+## SDF back-annotation
+#write_sdf -version 2.1 AM2910.sdf
+#suppress_message PTE-048
+#don't use the sdf file b/c vdds at synthesizing and working are different 
+#read_sdf  dc_router_top.sdf
+## Check timing
+check_timing
+Warning: Some timing arcs have been disabled for breaking timing loops
+	or because of constant propagation. Use the 'report_disable_timing'
+	command to get the list of these disabled timing arcs. (PTE-003)
+Information: Checking 'no_clock'.
+Warning: There are 18 register clock pins with no clock.
+
+Information: Checking 'no_input_delay'.
+Information: Checking 'partial_input_delay'.
+Information: Checking 'no_driving_cell'.
+Information: Checking 'unconstrained_endpoints'.
+Warning: There are 18 endpoints which are not constrained for maximum delay.
+
+Information: Checking 'unexpandable_clocks'.
+Information: Checking 'generic'.
+Information: Checking 'latch_fanout'.
+Information: Checking 'loops'.
+Information: Checking 'generated_clocks'.
+Information: Checking 'pulse_clock_non_pulse_clock_merge'.
+Information: Checking 'pll_configuration'.
+0
+report_design
+****************************************
+Report : design
+Design : dc_router_top
+Version: B-2008.06
+Date   : Sun Apr 14 16:43:10 2013
+****************************************
+
+Design Attribute                         Value
+---------------------------------------------------------------------------
+Operating Conditions:
+  analysis_type                          on_chip_variation
+  operating_condition_min_name           tt_1p2v_25c
+  process_min                            1
+  temperature_min                        25
+  voltage_min                            1.2
+  tree_type_min                          balanced_case
+
+  operating_condition_max_name           tt_1p2v_25c
+  process_max                            1
+  temperature_max                        25
+  voltage_max                            1.2
+  tree_type_max                          balanced_case
+
+Wire Load:                               (use report_wire_load for more information)
+  wire_load_mode                         top
+  wire_load_model_max                    --
+  wire_load_model_min                    --
+  wire_load_selection_group_max          --
+  wire_load_selection_group_min          --
+  wire_load_min_block_size               0
+
+Design Rules:
+  max_capacitance                        --
+  min_capacitance                        --
+  max_fanout                             --
+  max_transition                         --
+  max_area                               --
+
+Timing Ranges:
+  early_factor                           --
+  late_factor                            --
+
+Pin Input Delays:
+None specified.
+
+Pin Output Delays:
+None specified.
+1
+report_reference
+****************************************
+Report : reference
+Design : dc_router_top
+Version: B-2008.06
+Date   : Sun Apr 14 16:43:10 2013
+****************************************
+
+
+Attributes:
+    b - black-box (unknown)
+    h - hierarchical
+    n - noncombinational
+    u - contains unmapped logic
+    A - abstracted timing model
+    E - extracted timing model
+    S - Stamp timing model
+    Q - Quick timing model (QTM)
+
+Reference          Library       Unit Area   Count    Total Area   Attributes
+--------------------------------------------------------------------------------
+ADDHXLTS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   17.28     6         103.68      
+AHHCINX2TS         scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   21.60     3          64.80      
+AND2X2TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    7.20     13         93.60      
+AND2X4TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   10.08     1          10.08      
+AND2X6TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   14.40     1          14.40      
+AND2X8TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   15.84     9         142.56      
+AND2XLTS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    7.20     3          21.60      
+AND3X1TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    8.64     1           8.64      
+AND4X1TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   10.08     2          20.16      
+AO21X1TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    8.64     1           8.64      
+AO21X2TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   10.08     1          10.08      
+AO22X1TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   10.08     95        957.60      
+AO22X2TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   11.52     28        322.56      
+AO22X4TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   14.40     19        273.60      
+AO22XLTS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   10.08     1          10.08      
+AOI211X1TS         scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    8.64     1           8.64      
+AOI211X4TS         scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   15.84     1          15.84      
+AOI211XLTS         scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    8.64     3          25.92      
+AOI21X1TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    7.20     65        468.00      
+AOI21X2TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   12.96     27        349.92      
+AOI21X4TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   17.28     15        259.20      
+AOI21XLTS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    7.20     2          14.40      
+AOI22XLTS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    8.64     1           8.64      
+AOI2BB1X1TS        scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    8.64     2          17.28      
+AOI2BB1X2TS        scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   10.08     2          20.16      
+AOI2BB2X1TS        scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   10.08     1          10.08      
+AOI31X4TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   15.84     1          15.84      
+AOI32X1TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   10.08     3          30.24      
+AOI32XLTS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   10.08     1          10.08      
+AOI33X1TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   12.96     1          12.96      
+BUFX12TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   15.84     9         142.56      
+BUFX16TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   21.60     9         194.40      
+BUFX20TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   27.36     64       1751.04      
+BUFX2TS            scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    7.20     6          43.20      
+BUFX3TS            scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    7.20     112       806.40      
+BUFX4TS            scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    8.64     13        112.32      
+BUFX6TS            scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   11.52     12        138.24      
+BUFX8TS            scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   12.96     17        220.32      
+CLKAND2X2TS        scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    7.20     1           7.20      
+CLKBUFX12TS        scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   17.28     2          34.56      
+CLKBUFX2TS         scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    5.76     309      1779.84      
+CLKBUFX3TS         scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    7.20     40        288.00      
+CLKBUFX4TS         scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    8.64     1           8.64      
+CLKBUFX8TS         scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   12.96     1          12.96      
+CLKINVX12TS        scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   14.40     2          28.80      
+CLKINVX16TS        scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   17.28     1          17.28      
+CLKINVX1TS         scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    4.32     102       440.64      
+CLKINVX20TS        scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   20.16     1          20.16      
+CLKINVX2TS         scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    4.32     111       479.52      
+CLKINVX4TS         scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    5.76     4          23.04      
+CLKINVX6TS         scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    7.20     1           7.20      
+CLKINVX8TS         scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   10.08     2          20.16      
+CLKXOR2X2TS        scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   12.96     7          90.72      
+CLKXOR2X8TS        scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   33.12     1          33.12      
+DFFHQX1TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   28.80     13        374.40      n
+DFFHQX2TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   31.68     23        728.64      n
+DFFHQX4TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   41.76     57       2380.32      n
+DFFHQX8TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   47.52     17        807.84      n
+DFFQX1TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   24.48     17        416.16      n
+DFFQX2TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   25.92     3          77.76      n
+DFFQX4TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   27.36     30        820.80      n
+DFFTRX2TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   30.24     6         181.44      n
+DFFX1TS            scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   27.36     11        300.96      n
+DFFX2TS            scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   34.56     1          34.56      n
+DFFX4TS            scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   38.88     23        894.24      n
+DFFXLTS            scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   25.92     2          51.84      n
+INVX12TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   12.96     2          25.92      
+INVX1TS            scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    4.32     90        388.80      
+INVX2TS            scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    4.32     385      1663.20      
+INVX3TS            scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    5.76     5          28.80      
+INVX4TS            scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    5.76     9          51.84      
+INVX6TS            scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    8.64     3          25.92      
+INVX8TS            scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   10.08     3          30.24      
+INVXLTS            scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    4.32     64        276.48      
+MXI2X1TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   11.52     4          46.08      
+MXI2X4TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   23.04     1          23.04      
+NAND2BX1TS         scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    7.20     115       828.00      
+NAND2BX2TS         scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   10.08     1          10.08      
+NAND2BX4TS         scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   14.40     5          72.00      
+NAND2BXLTS         scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    7.20     5          36.00      
+NAND2X1TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    5.76     501      2885.76      
+NAND2X2TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    7.20     64        460.80      
+NAND2X4TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   11.52     24        276.48      
+NAND2X6TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   14.40     5          72.00      
+NAND2X8TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   18.72     6         112.32      
+NAND2XLTS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    5.76     26        149.76      
+NAND3BX1TS         scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    8.64     4          34.56      
+NAND3BX2TS         scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   11.52     4          46.08      
+NAND3X1TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    7.20     7          50.40      
+NAND3X2TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   10.08     2          20.16      
+NAND3XLTS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    7.20     2          14.40      
+NAND4BX1TS         scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   10.08     11        110.88      
+NAND4BXLTS         scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   10.08     3          30.24      
+NAND4X1TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    8.64     12        103.68      
+NAND4X2TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   12.96     2          25.92      
+NAND4XLTS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    8.64     1           8.64      
+NOR2BX1TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    7.20     27        194.40      
+NOR2BX2TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   10.08     2          20.16      
+NOR2BX4TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   12.96     3          38.88      
+NOR2X1TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    5.76     380      2188.80      
+NOR2X2TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    7.20     97        698.40      
+NOR2X4TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   11.52     45        518.40      
+NOR2X6TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   14.40     5          72.00      
+NOR2X8TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   18.72     12        224.64      
+NOR2XLTS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    5.76     7          40.32      
+NOR3BX2TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   11.52     1          11.52      
+NOR3X1TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    7.20     9          64.80      
+NOR3X2TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   10.08     2          20.16      
+NOR3XLTS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    7.20     2          14.40      
+NOR4BBX1TS         scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   12.96     2          25.92      
+NOR4X1TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   10.08     19        191.52      
+NOR4X2TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   15.84     24        380.16      
+NOR4X4TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   27.36     1          27.36      
+NOR4XLTS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    8.64     10         86.40      
+OA21X4TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   12.96     2          25.92      
+OA21XLTS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    8.64     7          60.48      
+OAI211X1TS         scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    8.64     1           8.64      
+OAI211XLTS         scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    8.64     1           8.64      
+OAI21X1TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    7.20     175      1260.00      
+OAI21X2TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   12.96     29        375.84      
+OAI21X4TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   17.28     7         120.96      
+OAI21XLTS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    7.20     22        158.40      
+OAI22X2TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   15.84     2          31.68      
+OAI2BB1X1TS        scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    8.64     50        432.00      
+OAI2BB1X2TS        scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   11.52     8          92.16      
+OAI2BB1X4TS        scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   14.40     1          14.40      
+OAI2BB1XLTS        scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    8.64     1           8.64      
+OAI2BB2X2TS        scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   15.84     1          15.84      
+OAI2BB2XLTS        scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   10.08     4          40.32      
+OAI31X1TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    8.64     22        190.08      
+OAI31X2TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   15.84     2          31.68      
+OAI31X4TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   15.84     2          31.68      
+OAI31XLTS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    8.64     2          17.28      
+OAI32X1TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   10.08     2          20.16      
+OAI33XLTS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   11.52     1          11.52      
+OR2X1TS            scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    7.20     2          14.40      
+OR2X2TS            scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    7.20     11         79.20      
+OR2X4TS            scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   10.08     3          30.24      
+OR2X6TS            scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   14.40     1          14.40      
+OR2X8TS            scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   15.84     4          63.36      
+OR3X1TS            scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    8.64     5          43.20      
+OR3XLTS            scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                    8.64     1           8.64      
+TBUFX12TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   24.48     13        318.24      
+TBUFX16TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   27.36     3          82.08      
+TBUFX2TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   11.52     250      2880.00      
+TBUFX3TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   14.40     51        734.40      
+TBUFX4TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   14.40     43        619.20      
+TBUFX6TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   15.84     19        300.96      
+TBUFX8TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   20.16     5         100.80      
+TLATXLTS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   15.84     18        285.12      n
+XNOR2X1TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   11.52     267      3075.84      
+XNOR2X2TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   18.72     35        655.20      
+XNOR2X4TS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   27.36     26        711.36      
+XNOR2XLTS          scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   11.52     4          46.08      
+XOR2X1TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   11.52     203      2338.56      
+XOR2X2TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   18.72     14        262.08      
+XOR2X4TS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   28.80     30        864.00      
+XOR2XLTS           scx3_cmos8rf_lpvt_tt_1p2v_25c
+                                   11.52     2          23.04      
+--------------------------------------------------------------------------------
+Total 158 references                                  46331.99
+1
+report_constraint
+****************************************
+Report : constraint
+Design : dc_router_top
+Version: B-2008.06
+Date   : Sun Apr 14 16:43:10 2013
+****************************************
+
+                                                   Weighted
+    Group (max_delay/setup)      Cost     Weight     Cost
+    -----------------------------------------------------
+    clk                          0.00      1.00      0.00
+    -----------------------------------------------------
+    max_delay/setup                                  0.00
+
+                                                   Weighted
+    Group (min_delay/hold)       Cost     Weight     Cost
+    -----------------------------------------------------
+    clk                        342.42      1.00    342.42
+    -----------------------------------------------------
+    min_delay/hold                                 342.42
+
+    Constraint                                       Cost
+    -----------------------------------------------------
+    max_delay/setup                                  0.00  (MET)
+    min_delay/hold                                 342.42  (VIOLATED)
+    sequential_clock_pulse_width                     0.00  (MET)
+    clock_tree_pulse_width                           0.00  (MET)
+    min_period                                       0.00  (MET)
+    max_capacitance                                  0.00  (MET)
+    max_transition                                   0.00  (MET)
+
+1
+report_constraint -all_violators
+****************************************
+Report : constraint
+	-all_violators
+	-path slack_only
+Design : dc_router_top
+Version: B-2008.06
+Date   : Sun Apr 14 16:43:10 2013
+****************************************
+
+
+
+   min_delay/hold ('clk' group)
+
+   Endpoint                                                  Slack
+   -----------------------------------------------------------------
+   addr_calc/fir_read_calc/counter/count_reg[10]/D           -1.98  (VIOLATED)
+   addr_calc/fir_read_calc/counter/count_reg[24]/D           -1.97  (VIOLATED)
+   addr_calc/fir_read_calc/counter/count_reg[9]/D            -1.97  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[25]/D          -1.96  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[24]/D          -1.95  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[27]/D           -1.95  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[24]/D           -1.94  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[25]/D          -1.94  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[24]/D           -1.94  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[25]/D           -1.94  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[30]/D           -1.92  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[31]/D          -1.92  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[11]/D          -1.92  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[4]/D            -1.91  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[19]/D          -1.91  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[29]/D           -1.91  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[17]/D           -1.90  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[3]/D            -1.90  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[16]/D           -1.90  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[18]/D          -1.89  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[0]/D           -1.89  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[25]/D          -1.89  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[23]/D          -1.89  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[19]/D          -1.89  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[25]/D           -1.87  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[18]/D           -1.86  (VIOLATED)
+   addr_calc/fir_read_calc/counter/count_reg[14]/D           -1.86  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[0]/D            -1.86  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[14]/D           -1.85  (VIOLATED)
+   addr_calc/fir_read_calc/counter/count_reg[18]/D           -1.84  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[22]/D          -1.84  (VIOLATED)
+   addr_calc/fir_read_calc/counter/count_reg[0]/D            -1.84  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[21]/D          -1.84  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[28]/D          -1.83  (VIOLATED)
+   addr_calc/fir_read_calc/counter/count_reg[16]/D           -1.83  (VIOLATED)
+   addr_calc/fir_read_calc/counter/count_reg[27]/D           -1.83  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[11]/D          -1.83  (VIOLATED)
+   addr_calc/fir_read_calc/counter/count_reg[25]/D           -1.82  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[21]/D           -1.82  (VIOLATED)
+   addr_calc/fir_read_calc/counter/count_reg[22]/D           -1.82  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[13]/D          -1.81  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[20]/D           -1.81  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[27]/D          -1.81  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[13]/D           -1.81  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[27]/D          -1.81  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[2]/D           -1.81  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[1]/D           -1.80  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[27]/D          -1.80  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[26]/D          -1.79  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[15]/D          -1.79  (VIOLATED)
+   addr_calc/fir_read_calc/counter/count_reg[3]/D            -1.78  (VIOLATED)
+   addr_calc/fir_read_calc/counter/count_reg[8]/D            -1.78  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[24]/D          -1.78  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[28]/D           -1.78  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[2]/D           -1.77  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[29]/D           -1.77  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[0]/D            -1.77  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[12]/D          -1.77  (VIOLATED)
+   addr_calc/fir_read_calc/counter/count_reg[4]/D            -1.77  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[19]/D           -1.76  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[8]/D           -1.76  (VIOLATED)
+   pla_top/fir_enable_reg/D                                  -1.76  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[1]/D            -1.76  (VIOLATED)
+   addr_calc/fir_read_calc/counter/count_reg[17]/D           -1.75  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[21]/D          -1.75  (VIOLATED)
+   addr_calc/fir_read_calc/counter/count_reg[19]/D           -1.75  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[3]/D           -1.75  (VIOLATED)
+   addr_calc/fir_read_calc/counter/count_reg[28]/D           -1.75  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[1]/D            -1.75  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[29]/D          -1.75  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[5]/D           -1.75  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[23]/D          -1.75  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[4]/D           -1.75  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[10]/D          -1.75  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[23]/D          -1.75  (VIOLATED)
+   addr_calc/fir_read_calc/counter/count_reg[20]/D           -1.74  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[28]/D          -1.74  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[3]/D           -1.74  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[1]/D           -1.74  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[9]/D            -1.74  (VIOLATED)
+   addr_calc/fir_read_calc/counter/count_reg[6]/D            -1.74  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[23]/D           -1.73  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[28]/D          -1.73  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[31]/D          -1.73  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[8]/D            -1.73  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[16]/D          -1.73  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[7]/D           -1.73  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[13]/D          -1.73  (VIOLATED)
+   addr_calc/fir_read_calc/counter/count_reg[11]/D           -1.73  (VIOLATED)
+   addr_calc/fir_read_calc/counter/count_reg[2]/D            -1.73  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[26]/D           -1.72  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[16]/D          -1.72  (VIOLATED)
+   addr_calc/fir_read_calc/counter/count_reg[21]/D           -1.72  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[2]/D            -1.72  (VIOLATED)
+   pla_top/iir_enable_reg/D                                  -1.72  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[15]/D           -1.72  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[18]/D          -1.72  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[11]/D           -1.71  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[2]/D            -1.71  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[7]/D           -1.70  (VIOLATED)
+   addr_calc/fir_read_calc/counter/count_reg[13]/D           -1.70  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[9]/D           -1.70  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[9]/D           -1.70  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[15]/D          -1.69  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[17]/D          -1.69  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[11]/D          -1.69  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[9]/D           -1.69  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[6]/D            -1.69  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[8]/D           -1.69  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[13]/D          -1.69  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[12]/D          -1.69  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[14]/D          -1.68  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[26]/D          -1.68  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[19]/D           -1.67  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[10]/D          -1.67  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[4]/D           -1.67  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[6]/D            -1.66  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[26]/D          -1.66  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[10]/D          -1.66  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[8]/D            -1.65  (VIOLATED)
+   addr_calc/fir_read_calc/counter/count_reg[15]/D           -1.65  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[9]/D            -1.64  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[2]/D           -1.64  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[7]/D           -1.64  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[5]/D           -1.64  (VIOLATED)
+   addr_calc/fir_read_calc/counter/count_reg[12]/D           -1.63  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[6]/D           -1.63  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[5]/D            -1.63  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[14]/D          -1.63  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[22]/D           -1.63  (VIOLATED)
+   addr_calc/fir_read_calc/counter/count_reg[26]/D           -1.62  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[4]/D            -1.60  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[8]/D           -1.59  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[5]/D           -1.59  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[24]/D          -1.59  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[0]/D           -1.59  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[31]/D           -1.57  (VIOLATED)
+   pla_top/fft_enable_reg/D                                  -1.56  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[30]/D          -1.56  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[27]/D           -1.55  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[19]/D          -1.54  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[22]/D           -1.53  (VIOLATED)
+   pla_top/instruction_valid_reg/D                           -1.53  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[3]/D            -1.53  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[30]/D          -1.52  (VIOLATED)
+   addr_calc/fir_read_calc/counter/count_reg[1]/D            -1.52  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[0]/D           -1.50  (VIOLATED)
+   addr_calc/fir_read_calc/counter/count_reg[7]/D            -1.50  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[20]/D          -1.50  (VIOLATED)
+   pla_top/acc_done_reg/D                                    -1.49  (VIOLATED)
+   addr_calc/fir_read_calc/counter/count_reg[23]/D           -1.49  (VIOLATED)
+   addr_calc/iir_read_calc/counter/done_reg/RN               -1.49  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[13]/D           -1.48  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[30]/D           -1.48  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[1]/D           -1.48  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[30]/D          -1.47  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[21]/D           -1.46  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[18]/D          -1.46  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[17]/D          -1.46  (VIOLATED)
+   addr_calc/fir_read_calc/counter/count_reg[5]/D            -1.46  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[5]/D            -1.46  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[14]/D          -1.45  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[22]/D          -1.45  (VIOLATED)
+   addr_calc/iir_read_calc/counter/done_reg/D                -1.44  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[7]/D            -1.44  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[17]/D           -1.44  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[20]/D           -1.44  (VIOLATED)
+   addr_calc/fir_read_calc/counter/count_reg[29]/D           -1.44  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[14]/D           -1.43  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[7]/D            -1.42  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[10]/D           -1.42  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[3]/D           -1.42  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[26]/D           -1.42  (VIOLATED)
+   addr_calc/fir_read_calc/counter/count_reg[30]/D           -1.40  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[15]/D           -1.40  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[31]/D          -1.40  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[28]/D           -1.39  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[11]/D           -1.39  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[31]/D           -1.39  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[12]/D           -1.38  (VIOLATED)
+   addr_calc/fir_write_calc/counter/done_reg/D               -1.38  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[29]/D          -1.38  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[23]/D           -1.37  (VIOLATED)
+   addr_calc/fir_write_calc/counter/done_reg/RN              -1.36  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[15]/D          -1.36  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[10]/D           -1.34  (VIOLATED)
+   addr_calc/iir_write_calc/counter/done_reg/RN              -1.33  (VIOLATED)
+   addr_calc/fft_read_calc/counter/done_reg/D                -1.33  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[4]/D           -1.32  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[22]/D          -1.32  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[6]/D           -1.32  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[21]/D          -1.32  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[12]/D          -1.30  (VIOLATED)
+   addr_calc/fft_write_calc/counter/count_reg[6]/D           -1.30  (VIOLATED)
+   addr_calc/fir_read_calc/counter/count_reg[31]/D           -1.30  (VIOLATED)
+   addr_calc/fir_read_calc/counter/done_reg/RN               -1.30  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[17]/D          -1.30  (VIOLATED)
+   addr_calc/fft_write_calc/counter/done_reg/D               -1.29  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[29]/D          -1.27  (VIOLATED)
+   addr_calc/fir_read_calc/counter/done_reg/D                -1.27  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[20]/D          -1.26  (VIOLATED)
+   addr_calc/iir_write_calc/counter/done_reg/D               -1.24  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[18]/D           -1.24  (VIOLATED)
+   addr_calc/fft_read_calc/counter/count_reg[16]/D           -1.23  (VIOLATED)
+   addr_calc/fft_read_calc/counter/done_reg/RN               -1.22  (VIOLATED)
+   addr_calc/fft_write_calc/counter/done_reg/RN              -1.22  (VIOLATED)
+   addr_calc/iir_write_calc/counter/count_reg[16]/D          -1.22  (VIOLATED)
+   addr_calc/fir_write_calc/counter/count_reg[20]/D          -1.21  (VIOLATED)
+   addr_calc/iir_read_calc/counter/count_reg[12]/D           -1.20  (VIOLATED)
+
+
+1
+#report_timing -exclude resetn
+report_timing -true
+****************************************
+Report : timing
+	-path_type full
+	-delay_type max
+	-true
+	-max_paths 1
+Design : dc_router_top
+Version: B-2008.06
+Date   : Sun Apr 14 16:43:11 2013
+****************************************
+
+
+  Startpoint: addr_calc/fft_write_calc/counter/count_reg[6]
+               (rising edge-triggered flip-flop clocked by clk')
+  Endpoint: addr[26] (output port clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  ------------------------------------------------------------------------------
+  clock clk' (rise edge)                                 10.00      10.00
+  clock network delay (ideal)                             1.50      11.50
+  addr_calc/fft_write_calc/counter/count_reg[6]/CK (DFFQX4TS)
+                                                          0.00      11.50 r
+  addr_calc/fft_write_calc/counter/count_reg[6]/Q (DFFQX4TS)
+                                                          1.09      12.59 f
+  FE_OFC240_addr_calc_fft_write_calc_count_6_/Y (CLKBUFX2TS)
+                                                          0.23      12.82 f
+  FE_OFC241_addr_calc_fft_write_calc_count_6_/Y (CLKBUFX2TS)
+                                                          0.26      13.07 f
+  U991/Y (NOR2X1TS)                                       0.21      13.28 r
+  add_x_19_1/U201/Y (NOR2X1TS)                            0.14      13.42 f
+  U617/Y (AOI21X1TS)                                      0.19      13.61 r
+  U618/Y (OAI21X1TS)                                      0.14      13.75 f
+  FE_OFC519_add_x_19_1_n157/Y (BUFX4TS)                   0.18      13.93 f
+  U591/Y (AOI21X4TS)                                      0.16      14.10 r
+  FE_OFC520_add_x_19_1_n113/Y (BUFX16TS)                  0.15      14.25 r
+  U595/Y (OAI21X2TS)                                      0.09      14.34 f
+  U447/Y (AOI21X1TS)                                      0.21      14.55 r
+  U552/Y (XNOR2X1TS)                                      0.27      14.82 f
+  addr_calc/addr_tri2[26]/Y (TBUFX2TS)                    0.71      15.54 f
+  addr[26] (out)                                          0.00      15.54 f
+  data arrival time                                                 15.54
+
+  clock clk (rise edge)                                  20.00      20.00
+  clock network delay (ideal)                             0.00      20.00
+  clock uncertainty                                      -1.00      19.00
+  output external delay                                  -1.50      17.50
+  data required time                                                17.50
+  ------------------------------------------------------------------------------
+  data required time                                                17.50
+  data arrival time                                                -15.54
+  ------------------------------------------------------------------------------
+  slack (MET)                                                        1.96
+
+
+1
+report_timing -false
+****************************************
+Report : timing
+	-path_type full
+	-delay_type max
+	-max_paths 1
+	-false
+Design : dc_router_top
+Version: B-2008.06
+Date   : Sun Apr 14 16:43:11 2013
+****************************************
+
+
+1
+report_timing -true
+****************************************
+Report : timing
+	-path_type full
+	-delay_type max
+	-true
+	-max_paths 1
+Design : dc_router_top
+Version: B-2008.06
+Date   : Sun Apr 14 16:43:11 2013
+****************************************
+
+
+  Startpoint: addr_calc/fft_write_calc/counter/count_reg[6]
+               (rising edge-triggered flip-flop clocked by clk')
+  Endpoint: addr[26] (output port clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  ------------------------------------------------------------------------------
+  clock clk' (rise edge)                                 10.00      10.00
+  clock network delay (ideal)                             1.50      11.50
+  addr_calc/fft_write_calc/counter/count_reg[6]/CK (DFFQX4TS)
+                                                          0.00      11.50 r
+  addr_calc/fft_write_calc/counter/count_reg[6]/Q (DFFQX4TS)
+                                                          1.09      12.59 f
+  FE_OFC240_addr_calc_fft_write_calc_count_6_/Y (CLKBUFX2TS)
+                                                          0.23      12.82 f
+  FE_OFC241_addr_calc_fft_write_calc_count_6_/Y (CLKBUFX2TS)
+                                                          0.26      13.07 f
+  U991/Y (NOR2X1TS)                                       0.21      13.28 r
+  add_x_19_1/U201/Y (NOR2X1TS)                            0.14      13.42 f
+  U617/Y (AOI21X1TS)                                      0.19      13.61 r
+  U618/Y (OAI21X1TS)                                      0.14      13.75 f
+  FE_OFC519_add_x_19_1_n157/Y (BUFX4TS)                   0.18      13.93 f
+  U591/Y (AOI21X4TS)                                      0.16      14.10 r
+  FE_OFC520_add_x_19_1_n113/Y (BUFX16TS)                  0.15      14.25 r
+  U595/Y (OAI21X2TS)                                      0.09      14.34 f
+  U447/Y (AOI21X1TS)                                      0.21      14.55 r
+  U552/Y (XNOR2X1TS)                                      0.27      14.82 f
+  addr_calc/addr_tri2[26]/Y (TBUFX2TS)                    0.71      15.54 f
+  addr[26] (out)                                          0.00      15.54 f
+  data arrival time                                                 15.54
+
+  clock clk (rise edge)                                  20.00      20.00
+  clock network delay (ideal)                             0.00      20.00
+  clock uncertainty                                      -1.00      19.00
+  output external delay                                  -1.50      17.50
+  data required time                                                17.50
+  ------------------------------------------------------------------------------
+  data required time                                                17.50
+  data arrival time                                                -15.54
+  ------------------------------------------------------------------------------
+  slack (MET)                                                        1.96
+
+
+1
+#report_timing -true -to data_out*
+## Power analysis
+#read_vcd -strip_path /testbench/DUT_0 FIR.vcd
+#estimate_clock_network_power sc_svtgp_025_res/HS65_GS_BFX4
+#update_power
+#create_power_waveforms -output "vcd"
+#report_power -include_estimated_clock_network
+#report_power
+#report_power -hierarchy
+#report_lfsr1ing_activity -average_activity -hierarchy -base_clock $clk_port
+#report_lfsr1ing_activity 
+# Exiting primetime
+quit
+Information: Defining new variable 'mydelay'. (CMD-041)
+Information: Defining new variable 'my_toplevel'. (CMD-041)
+Information: Defining new variable 'clk_name'. (CMD-041)
+Information: Defining new variable 'spef_files'. (CMD-041)
+Information: Defining new variable 'clk_period'. (CMD-041)
+Information: Defining new variable 'verilog_files'. (CMD-041)
+Information: Defining new variable 'clk_transition'. (CMD-041)
+Information: Defining new variable 'clk_uncertainty'. (CMD-041)
+Information: Defining new variable 'clk_port'. (CMD-041)
+Updating preference file: /user4/spring13/ms4543/.synopsys_pt_prefs.tcl
+
+Timing updates: 1 (1 implicit, 0 explicit) (0 incremental, 1 full)
+Maximum memory usage for this session: 85.80 MB
+CPU usage for this session: 2 seconds
+Diagnostics summary: 2 warnings, 10 informationals
+
+Thank you for using pt_shell!

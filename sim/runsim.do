@@ -25,7 +25,8 @@ vmap work work
 
 # Include Netlist and Testbench
 #vlog -incr /tools2/courses/ee6321/share/ibm13rflpvt/verilog/ibm13rflpvt.v
-vlog -incr ../top_half/*.v ../fifo/*.v
+vlog -incr ../src/*.v
+vlog -incr ram.v
 vlog -incr top_level_tb.v
 
 # Run Simulator 

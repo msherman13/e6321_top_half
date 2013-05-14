@@ -1,0 +1,8 @@
+################################################
+#                                              #
+# Silicon Perspective, A Cadence Company       #
+# FirstEncounter Design Restore script         #
+#    for design session: top_level.opted.enc                     
+#                                              #
+################################################
+restoreDesign top_level.opted.enc.dat top_level

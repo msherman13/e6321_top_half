@@ -6,12 +6,13 @@ module hazard
 	input [4:0] writeregE, writeregM, writeregW,
 	input branchD,
 	output stallF, stallD, 
-	output forwardAD, forwardBD,
+	output reg forwardAD, forwardBD,
 	output reg [1:0] forwardAE, forwardBE,
 	output flushE
 );
 
 	wire lwstallD, branchstallD;
+
 	// forwarding sources to E stage (ALU)
 	always @(*)
 		begin						
@@ -22,10 +23,13 @@ module hazard
 			if ((rtE != 0) & (rtE == writeregM) & regwriteM) forwardBE = 2'b10;
 			else if ((rtE != 0) & (rtE == writeregW) & regwriteW) forwardBE = 2'b01;
 			else forwardBE = 2'b00;
+                        
+                        if (rsD != 0 & rsD == writeregM & regwriteM) forwardAD = 1;
+                        else forwardAD = 0;
+
+                        if (rtD != 0 & rtD == writeregM & regwriteM) forwardBD = 1;
+                        else forwardBD = 0;
 		end
-	
-	assign forwardAD = (rsD != 0 & rsD == writeregM & regwriteM) ? 1 : 0;  //predecide if beq's R[rs] equals R[rt]
-	assign forwardBD = (rtD != 0 & rtD == writeregM & regwriteM) ? 1 : 0;  //predecide if beq's R[rs] equals R[rt]
 
 	//lw
 	assign lwstallD = (rsD == rtE | rtD == rtE) & memtoregE;

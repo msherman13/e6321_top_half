@@ -1,0 +1,24 @@
+setAnalysisMode -analysisType single -checkType setup -clkSrcPath true -clockPropagation sdcControl -virtualIPO false
+setTrialRouteMode -handlePreroute true -keepMarkedOptRoutes true
+setOptMode -drcMargin 0 -effort high -fixCap false -fixDrc true -fixFanoutLoad true -holdTargetSlack 0 -moveInst true -reclaimArea true -route noIncr -rPlace true -setupTargetSlack 0 -simplifyNetlist false -usefulSkew false -yieldEffort none
+setExtractRCMode  -engine detail -coupled false -viaCap true
+setDelayCalMode -engine default
+setCTSMode -nameSingleDelim false
+setNanoRouteMode -quiet -drouteFixAntenna true
+setNanoRouteMode -quiet -droutePostRouteSwapVia "multiCut"
+setNanoRouteMode -quiet -drouteStartIteration 0
+setNanoRouteMode -quiet -drouteUseMultiCutViaEffort "high"
+setNanoRouteMode -quiet -routeBottomRoutingLayer 1
+setNanoRouteMode -quiet -routeExpSignatureEco false
+setNanoRouteMode -quiet -routeSelectedNetOnly false
+setNanoRouteMode -quiet -routeSiEffort "high"
+setNanoRouteMode -quiet -routeSiLengthLimit 200.000000
+setNanoRouteMode -quiet -routeTdrEffort 10
+setNanoRouteMode -quiet -routeTdrPreferLayerPercentage 0.000000
+setNanoRouteMode -quiet -routeTopRoutingLayer 3
+setNanoRouteMode -quiet -routeWithSiDriven true
+setNanoRouteMode -quiet -routeWithTimingDriven true
+setNanoRouteMode -quiet -routeWithViaInPin "true"
+setNanoRouteMode -quiet -routeWithViaOnlyForStandardCellPin "false"
+
+setPlaceMode -congEffort low -doCongOpt false -ignoreScan true -maxRouteLayer 5 -modulePlan true -timingDriven true -useNP true -WLHighEffort false

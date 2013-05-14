@@ -1,0 +1,6 @@
+
+ClockNetName clk
+LevelNumber 1
+LevelSpec 1 1 CLKINVX16TS
+PostOpt Yes
+End

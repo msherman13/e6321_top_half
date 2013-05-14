@@ -1,0 +1,263 @@
+# //  ModelSim SE 5.8e Aug 28 2004 Linux 2.6.18-274.3.1.el5
+# //
+# //  Copyright Model Technology, a Mentor Graphics Corporation company, 2004
+# //                         All Rights Reserved.
+# //                   UNPUBLISHED, LICENSED SOFTWARE.
+# //         CONFIDENTIAL AND PROPRIETARY INFORMATION WHICH IS THE
+# //        PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS LICENSORS.
+# //
+do runsim.do\
+# missing close-brace
+
+do runsim.do
+# Cannot open macro file: runsim.do
+cd ../sim
+# reading modelsim.ini
+do runsim.dio
+# Cannot open macro file: runsim.dio
+do runsim.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Modifying modelsim.ini
+# Model Technology ModelSim SE vlog 5.8e Compiler 2004.08 Aug 28 2004
+# -- Compiling module FIFO_HL
+# -- Compiling module FIFO_module
+# -- Skipping module acc
+# -- Skipping module adder32b
+# -- Skipping module addr_calc_top
+# -- Skipping module controller
+# -- Skipping module main_decode
+# -- Skipping module alu_decode
+# -- Compiling module data_bus_controller
+# -- Skipping module datapath
+# -- Skipping module dc_router_top
+# -- Compiling module empty_detector
+# -- Skipping module filt_address_calc
+# -- Compiling module counter1
+# -- Compiling module full_detector
+# -- Compiling module get_controller
+# -- Skipping module hazard
+# -- Compiling module init_mux_newest
+# -- Skipping module d_mem
+# -- Skipping module i_mem
+# -- Skipping module mipspipelined
+# -- Skipping module mipstop
+# -- Skipping module ALU
+# -- Skipping module adder
+# -- Skipping module shift_left_2
+# -- Skipping module sign_ext
+# -- Skipping module mux2_32
+# -- Skipping module mux2_5
+# -- Skipping module mux3_32
+# -- Skipping module mux4_32
+# -- Skipping module reg_file
+# -- Skipping module flopr_32
+# -- Skipping module flopr_5
+# -- Skipping module flopr_4
+# -- Skipping module flopr_2
+# -- Skipping module floprc_32
+# -- Skipping module floprc_10
+# -- Skipping module floprc_5
+# -- Skipping module flopenr_32
+# -- Skipping module flopenrc_32
+# -- Skipping module eqcmp
+# -- Skipping module pla_top
+# -- Compiling module put_controller
+# -- Compiling module reg_32
+# -- Compiling module reg_get_token
+# -- Compiling module reg_token_newestest
+# -- Skipping module testbench_FIFO_extensive
+# -- Compiling module top_level
+# -- Skipping module tristate
+# -- Skipping module validity_controller
+# 
+# Top level modules:
+# 	flopr_2
+# 	testbench_FIFO_extensive
+# 	top_level
+# Model Technology ModelSim SE vlog 5.8e Compiler 2004.08 Aug 28 2004
+# -- Skipping module top_level_tb
+# 
+# Top level modules:
+# 	top_level_tb
+# vsim -lib work -t ps top_level_tb 
+# Loading work.top_level_tb
+# Loading work.top_level
+# Loading work.mipstop
+# ** Warning: (vsim-3009) [TSCALE] - Module 'mipstop' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/mips
+# Loading work.mipspipelined
+# ** Warning: (vsim-3009) [TSCALE] - Module 'mipspipelined' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/mips/mips
+# Loading work.controller
+# ** Warning: (vsim-3009) [TSCALE] - Module 'controller' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/mips/mips/c
+# Loading work.main_decode
+# ** Warning: (vsim-3009) [TSCALE] - Module 'main_decode' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/mips/mips/c/md
+# Loading work.alu_decode
+# ** Warning: (vsim-3009) [TSCALE] - Module 'alu_decode' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/mips/mips/c/ad
+# Loading work.floprc_10
+# ** Warning: (vsim-3009) [TSCALE] - Module 'floprc_10' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/mips/mips/c/regE
+# Loading work.flopr_5
+# ** Warning: (vsim-3009) [TSCALE] - Module 'flopr_5' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/mips/mips/c/regM
+# Loading work.flopr_4
+# ** Warning: (vsim-3009) [TSCALE] - Module 'flopr_4' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/mips/mips/c/regW
+# Loading work.datapath
+# ** Warning: (vsim-3009) [TSCALE] - Module 'datapath' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/mips/mips/dp
+# Loading work.hazard
+# ** Warning: (vsim-3009) [TSCALE] - Module 'hazard' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/mips/mips/dp/h
+# Loading work.reg_file
+# ** Warning: (vsim-3009) [TSCALE] - Module 'reg_file' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/mips/mips/dp/rg
+# Loading work.flopenr_32
+# ** Warning: (vsim-3009) [TSCALE] - Module 'flopenr_32' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/mips/mips/dp/pcreg
+# Loading work.flopenrc_32
+# ** Warning: (vsim-3009) [TSCALE] - Module 'flopenrc_32' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/mips/mips/dp/r1D
+# Loading work.sign_ext
+# ** Warning: (vsim-3009) [TSCALE] - Module 'sign_ext' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/mips/mips/dp/se
+# Loading work.shift_left_2
+# ** Warning: (vsim-3009) [TSCALE] - Module 'shift_left_2' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/mips/mips/dp/sl1
+# Loading work.mux2_32
+# ** Warning: (vsim-3009) [TSCALE] - Module 'mux2_32' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/mips/mips/dp/equalforwarda
+# Loading work.eqcmp
+# ** Warning: (vsim-3009) [TSCALE] - Module 'eqcmp' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/mips/mips/dp/eq
+# Loading work.adder
+# ** Warning: (vsim-3009) [TSCALE] - Module 'adder' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/mips/mips/dp/pcadder1
+# Loading work.mux4_32
+# ** Warning: (vsim-3009) [TSCALE] - Module 'mux4_32' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/mips/mips/dp/pcmux
+# Loading work.floprc_32
+# ** Warning: (vsim-3009) [TSCALE] - Module 'floprc_32' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/mips/mips/dp/r1E
+# Loading work.floprc_5
+# ** Warning: (vsim-3009) [TSCALE] - Module 'floprc_5' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/mips/mips/dp/r3E
+# Loading work.mux2_5
+# ** Warning: (vsim-3009) [TSCALE] - Module 'mux2_5' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/mips/mips/dp/writedst
+# Loading work.mux3_32
+# ** Warning: (vsim-3009) [TSCALE] - Module 'mux3_32' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/mips/mips/dp/srcamux
+# Loading work.ALU
+# ** Warning: (vsim-3009) [TSCALE] - Module 'ALU' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/mips/mips/dp/alu
+# Loading work.flopr_32
+# ** Warning: (vsim-3009) [TSCALE] - Module 'flopr_32' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/mips/mips/dp/r1M
+# Loading work.acc
+# ** Warning: (vsim-3009) [TSCALE] - Module 'acc' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/mips/mips/a
+# Loading work.d_mem
+# ** Warning: (vsim-3009) [TSCALE] - Module 'd_mem' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/mips/dm
+# Loading work.i_mem
+# ** Warning: (vsim-3009) [TSCALE] - Module 'i_mem' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/mips/im
+# Loading work.FIFO_module
+# ** Warning: (vsim-3009) [TSCALE] - Module 'FIFO_module' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/fifo_to_fft
+# Loading work.init_mux_newest
+# ** Warning: (vsim-3009) [TSCALE] - Module 'init_mux_newest' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/fifo_to_fft/init_ptok
+# Loading work.FIFO_HL
+# ** Warning: (vsim-3009) [TSCALE] - Module 'FIFO_HL' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/fifo_to_fft/fifo_cell0
+# Loading work.reg_32
+# ** Warning: (vsim-3009) [TSCALE] - Module 'reg_32' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/fifo_to_fft/fifo_cell0/register
+# Loading work.validity_controller
+# Loading work.tristate
+# Loading work.reg_token_newestest
+# ** Warning: (vsim-3009) [TSCALE] - Module 'reg_token_newestest' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/fifo_to_fft/fifo_cell0/reg_ptok
+# Loading work.reg_get_token
+# ** Warning: (vsim-3009) [TSCALE] - Module 'reg_get_token' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/fifo_to_fft/fifo_cell0/reg_gtok
+# Loading work.full_detector
+# ** Warning: (vsim-3009) [TSCALE] - Module 'full_detector' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/fifo_to_fft/full_det
+# Loading work.empty_detector
+# ** Warning: (vsim-3009) [TSCALE] - Module 'empty_detector' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/fifo_to_fft/empty_det
+# Loading work.put_controller
+# ** Warning: (vsim-3009) [TSCALE] - Module 'put_controller' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/fifo_to_fft/put_ctrl
+# Loading work.get_controller
+# ** Warning: (vsim-3009) [TSCALE] - Module 'get_controller' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/fifo_to_fft/get_ctrl
+# Loading work.dc_router_top
+# ** Warning: (vsim-3009) [TSCALE] - Module 'dc_router_top' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/router
+# Loading work.pla_top
+# ** Warning: (vsim-3009) [TSCALE] - Module 'pla_top' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/router/pla_top
+# Loading work.addr_calc_top
+# ** Warning: (vsim-3009) [TSCALE] - Module 'addr_calc_top' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/router/addr_calc
+# Loading work.filt_address_calc
+# ** Warning: (vsim-3009) [TSCALE] - Module 'filt_address_calc' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/router/addr_calc/fft_read_calc
+# Loading work.counter1
+# ** Warning: (vsim-3009) [TSCALE] - Module 'counter1' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/router/addr_calc/fft_read_calc/counter
+# Loading work.adder32b
+# ** Warning: (vsim-3009) [TSCALE] - Module 'adder32b' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/router/addr_calc/fft_read_calc/adder
+# Loading work.data_bus_controller
+# ** Warning: (vsim-3009) [TSCALE] - Module 'data_bus_controller' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/top_half/router/data_cntl
+# Loading work.ram
+# ** Warning: (vsim-3009) [TSCALE] - Module 'ram' does not have a `timescale directive in effect, but previous modules do.
+#         Region: /top_level_tb/memory
+# ** Error: (vish-4014) No objects found matching '/top_level_tb/top_half/fifo_to_acc/fifo_cell0/register/sr'.
+# Executing ONERROR command at macro ./waveformat.do line 7
+# ** Error: (vish-4014) No objects found matching '/top_level_tb/top_half/fifo_to_acc/fifo_cell1/register/sr'.
+# Executing ONERROR command at macro ./waveformat.do line 8
+# ** Error: (vish-4014) No objects found matching '/top_level_tb/top_half/fifo_to_acc/fifo_cell2/register/sr'.
+# Executing ONERROR command at macro ./waveformat.do line 9
+# ** Error: (vish-4014) No objects found matching '/top_level_tb/top_half/fifo_to_acc/fifo_cell3/register/sr'.
+# Executing ONERROR command at macro ./waveformat.do line 10
+# ** Error: (vish-4014) No objects found matching '/top_level_tb/top_half/fifo_to_acc/fifo_cell4/register/sr'.
+# Executing ONERROR command at macro ./waveformat.do line 11
+# ** Error: (vish-4014) No objects found matching '/top_level_tb/top_half/fifo_to_acc/fifo_cell5/register/sr'.
+# Executing ONERROR command at macro ./waveformat.do line 12
+# ** Error: (vish-4014) No objects found matching '/top_level_tb/top_half/fifo_to_acc/fifo_cell6/register/sr'.
+# Executing ONERROR command at macro ./waveformat.do line 13
+# ** Error: (vish-4014) No objects found matching '/top_level_tb/top_half/fifo_to_acc/fifo_cell7/register/sr'.
+# Executing ONERROR command at macro ./waveformat.do line 14
+# ** Error: (vish-4014) No objects found matching '/top_level_tb/top_half/fifo_to_acc/fifo_cell8/register/sr'.
+# Executing ONERROR command at macro ./waveformat.do line 15
+# ** Error: (vish-4014) No objects found matching '/top_level_tb/top_half/fifo_to_acc/fifo_cell9/register/sr'.
+# Executing ONERROR command at macro ./waveformat.do line 16
+# ** Error: (vish-4014) No objects found matching '/top_level_tb/top_half/fifo_to_acc/fifo_cell10/register/sr'.
+# Executing ONERROR command at macro ./waveformat.do line 17
+# ** Error: (vish-4014) No objects found matching '/top_level_tb/top_half/fifo_to_acc/fifo_cell11/register/sr'.
+# Executing ONERROR command at macro ./waveformat.do line 18
+# ** Error: (vish-4014) No objects found matching '/top_level_tb/top_half/fifo_to_acc/fifo_cell12/register/sr'.
+# Executing ONERROR command at macro ./waveformat.do line 19
+# ** Error: (vish-4014) No objects found matching '/top_level_tb/top_half/fifo_to_acc/fifo_cell13/register/sr'.
+# Executing ONERROR command at macro ./waveformat.do line 20
+# ** Error: (vish-4014) No objects found matching '/top_level_tb/top_half/fifo_to_acc/fifo_cell14/register/sr'.
+# Executing ONERROR command at macro ./waveformat.do line 21
+# ** Error: (vish-4014) No objects found matching '/top_level_tb/top_half/fifo_to_acc/fifo_cell15/register/sr'.
+# Executing ONERROR command at macro ./waveformat.do line 22
+# ** Note: $finish    : top_level_tb.v(70)
+#    Time: 2000350 ns  Iteration: 0  Instance: /top_level_tb
+# 1
+# Break at top_level_tb.v line 70
+# Simulation Breakpoint: 1
+# Break at top_level_tb.v line 70
+# MACRO ./runsim.do PAUSED at line 34

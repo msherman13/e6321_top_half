@@ -1,0 +1,103 @@
+# Written by mgseok, May 08
+
+#################################################
+# ST45nm Library information from .lib file     #
+#  time_unit : "1ns";                           #
+#  voltage_unit : "1V";                         #
+#  current_unit : "1mA";                        # 
+#  pulling_resistance_unit : "1kohm";           #
+#  capacitive_load_unit(1,pf);                  #
+#  default_cell_leakage_power : 4.89642e-08;    #
+#  default_fanout_load : 1;                     # 
+#  default_inout_pin_cap : 0.01;                #
+#  default_input_pin_cap : 0.01;                #
+#  default_leakage_power_density : 3.46968e-08; #
+#  default_max_fanout : 20;                     # 
+#  default_output_pin_cap : 0;                  #
+#  default_wire_load_mode : "enclosed";         #
+#  leakage_power_unit : "1mW";                  # 
+#################################################
+
+## Global lfsr1es
+set sh_enable_page_mode true
+set power_enable_analysis true
+set true_delay_prove_false_backtrack_limit 1000 
+set true_delay_prove_true_backtrack_limit 1000 
+
+## Setting files/paths
+set verilog_files {dc_router_top.nophycell.v}
+set spef_files {dc_router_top.spef}
+set my_toplevel dc_router_top
+set search_path ". ../dc_shell_cmrf8sf/ /tools2/courses/ee6321/share/ibm13rflpvt/synopsys/"
+set link_path "* scx3_cmos8rf_lpvt_tt_1p2v_25c.db" 
+
+## Read design
+read_db "scx3_cmos8rf_lpvt_tt_1p2v_25c.db"
+read_verilog $verilog_files
+link_design -keep_sub_designs $my_toplevel
+#read_parasitics -keep_capacitive_coupling $spef_files
+
+## Timing Constraint: Clock
+#Propagated clock used for gated clocks only
+set clk_period 25
+set clk_uncertainty 1
+set clk_transition 1   
+
+if {[sizeof_collection [get_ports clk]] > 0} {
+  set clk_name "clk"
+  set clk_port "clk"
+  create_clock -name $clk_name -period $clk_period [get_ports $clk_port]
+}
+#set clk_name "clk"
+#create_clock -period $clk_period -name $clk_name 
+
+set_clock_uncertainty $clk_uncertainty [get_clocks $clk_name]
+set_clock_transition $clk_transition [get_clocks $clk_name]
+#set_clock_latency -max 5.5 $clock
+#set_clock_transition -min 0.25 $clock
+#set_clock_gating_check -setup 0.5 -hold 0.1 $clock
+
+## Timing Constraint: Input delay or output delay 
+set mydelay 1.5
+set_input_delay $mydelay -clock $clk_name [all_inputs] -add_delay
+remove_input_delay -clock $clk_name [find port $clk_name]
+set_output_delay $mydelay -clock $clk_name [all_outputs]
+
+## Setting minimum pulse width allowed
+set_min_pulse_width 0.005 
+
+## Setting driving buffer and output cap
+#set_driving_cell -lib_cell HS65_GS_IVX9 [all_inputs]
+set_load 0.060 [all_outputs]
+
+## SDF back-annotation
+#write_sdf -version 2.1 AM2910.sdf
+#suppress_message PTE-048
+#don't use the sdf file b/c vdds at synthesizing and working are different 
+#read_sdf  dc_router_top.sdf
+
+## Check timing
+check_timing
+report_design
+report_reference
+report_constraint
+report_constraint -all_violators
+#report_timing -exclude resetn
+report_timing -true
+report_timing -false
+report_timing -true
+#report_timing -true -to data_out*
+
+## Power analysis
+#read_vcd -strip_path /testbench/DUT_0 FIR.vcd
+#estimate_clock_network_power sc_svtgp_025_res/HS65_GS_BFX4
+#update_power
+#create_power_waveforms -output "vcd"
+#report_power -include_estimated_clock_network
+#report_power
+#report_power -hierarchy
+#report_lfsr1ing_activity -average_activity -hierarchy -base_clock $clk_port
+#report_lfsr1ing_activity 
+ 
+# Exiting primetime
+quit

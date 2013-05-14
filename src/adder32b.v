@@ -10,10 +10,9 @@
 **
 ******************************************************************************/
 
-module adder32b (a, b, clk, s);
+module adder32b (a, b, s);
 	input [31:0] a;
 	input [31:0] b;
-	input clk;
 	output [31:0] s;
 
 

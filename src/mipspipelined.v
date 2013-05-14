@@ -8,8 +8,9 @@ module mipspipelined
 	output [31:0] aluoutM,
 	output [31:0] writedataM,
         output accbypassA,
-        output [5:0] startaddrA,
-        output [5:0] datasizeA
+        output [31:0] fullinstructionA,
+        output [31:0] startaddrA,
+        output [31:0] datasizeA
 );	
 	wire [5:0] opD, functD;
 	wire flushE, equalD;
@@ -17,17 +18,21 @@ module mipspipelined
 	wire pcsrcD, branchD;
 	wire [2:0] alucontrolE;
 	wire alusrcE, regdstE, regwriteE, regwriteM, regwriteW;
-        wire [5:0] startaddr, datasize;
+        wire accbypass;
+        wire [31:0] accfullinstruction;
+        wire [31:0] fullinstruction;
+        wire loadstartaddrW;
+        wire loaddatasizeW;
 
-	controller c(clk, reset, accdone, functD, opD, flushE, equalD,
-		     jumpD, memtoregE, memtoregM, memtoregW,
-		     memwriteM, pcsrcD, branchD, alucontrolE,
-		     alusrcE, regdstE, regwriteE, regwriteM, regwriteW, accbypass);
+	controller c(clk, reset, accdone, functD, opD, flushE, equalD, fullinstruction,
+		     jumpD, memtoregE, memtoregM, memtoregW, memwriteM, 
+                     pcsrcD, branchD, alucontrolE, alusrcE, 
+                     regdstE, regwriteE, regwriteM, regwriteW, accbypass, accfullinstruction, loadstartaddrW, loaddatasizeW);
 	
-	datapath dp(clk, reset, accbypass, instrF, readdataM, jumpD, memtoregE, memtoregM, memtoregW,
+	datapath dp(clk, reset, accbypass, loadstartaddrW, loaddatasizeW, instrF, readdataM, jumpD, memtoregE, memtoregM, memtoregW,
 		    pcsrcD, branchD, alucontrolE, alusrcE, regdstE, regwriteE, regwriteM, regwriteW,
-		    equalD, pcF, aluoutM, writedataM, opD, functD, flushE, startaddr, datasize);
+		    equalD, pcF, aluoutM, writedataM, opD, functD, flushE, fullinstruction, startaddrA, datasizeA);
 
-        acc a(clk, reset, accdone, accbypass, startaddr, datasize, accbypassA, startaddrA, datasizeA);
+        acc a(clk, reset, accbypass, accfullinstruction, accbypassA, fullinstructionA);
 endmodule
 

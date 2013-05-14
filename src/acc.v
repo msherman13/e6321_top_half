@@ -1,44 +1,49 @@
 module acc
 (
 	input clk, reset,
-        input accdone, accbypass,
-        input [5:0] startaddr,
-        input [5:0] datasize,
-        output accbypassA,
-        output [5:0] startaddrA,
-        output [5:0] datasizeA
+        input accbypass,
+        input [31:0] fullinstruction,
+        output reg accbypassA,
+        output reg [31:0] fullinstructionA
 );
 	reg countflag;
  	reg [1:0] count;
-        reg accbypassA_reg;
-        reg [5:0] startaddrA_reg;
-        reg [5:0] datasizeA_reg;
-
-	assign accbypassA = accbypassA_reg;
-	assign startaddrA = startaddrA_reg;
-	assign datasizeA = datasizeA_reg;
-
-	always@(posedge clk)
+ 
+	always @(posedge clk)
 	begin
-	  if (reset | accdone) begin
-		                 countflag <= 1;
-                                 count <= 0;
-		                 accbypassA_reg <= 0;
-		               end
-          else begin
-		 if (accbypass & countflag) count <= count + 1;
-	         else begin
-                        accbypassA_reg <= accbypass;
-                        startaddrA_reg <= startaddr;
-                        datasizeA_reg <= datasize;
-                      end
-	       end	
+	  if (reset | ~accbypass) 
+          begin
+            count <= 0;
+	  end
+	  else
+          begin
+            if (countflag) count <= count + 1;
+            else count <= count;
+          end
 	end
 
-	always@(count)
-	begin
-	  if (count == 2'b11) countflag <= 0;
-          else countflag <= countflag;
+        always @(posedge clk)
+        if (reset | ~accbypass)
+        begin
+          fullinstructionA <= 0;
+          accbypassA <= 0;
+        end
+        else if (countflag == 0)
+        begin
+          fullinstructionA <= fullinstruction;
+          accbypassA <= accbypass;
+        end
+        else
+        begin
+          fullinstructionA <= 0;
+          accbypassA <= 0;
+        end
+
+        always @(*)
+        begin
+          if (reset | ~accbypass) countflag = 1;
+          else if (count == 2'b11) countflag = 0;
+          else countflag = countflag;
         end
 
 endmodule

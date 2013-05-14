@@ -1,0 +1,8 @@
+setAnalysisMode -analysisType single -clkSrcPath true -clockPropagation sdcControl -virtualIPO false
+setTrialRouteMode -handlePreroute true -keepMarkedOptRoutes true
+setOptMode -drcMargin 0 -effort low -fixDrc true -fixFanoutLoad true -moveInst true -reclaimArea true -rPlace true
+setExtractRCMode  -engine default
+setDelayCalMode -engine default
+setNanoRouteMode -quiet -routeTopRoutingLayer 5
+
+setPlaceMode -congEffort low -doCongOpt false -ignoreScan true -maxRouteLayer 5 -modulePlan true -timingDriven true -useNP true -WLHighEffort false

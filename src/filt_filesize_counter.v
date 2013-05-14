@@ -17,24 +17,31 @@ module counter1 (filesize,enable,pause,clk,count,done);
         output done;
 
 reg[31:0] count;
-reg done;
+reg done, hold;
 
 always @(posedge clk)
 begin
+	if (hold == 1) begin
+		hold <= 0;
+		count <= count;
+	end
+	else begin
         if (enable)
         begin
                 if (count != filesize-1)
                 begin
                         if (!pause)
                         begin
-                                if (count == 0)
+                                if (count == -1)
                                 begin
-                                        count <= 1;
+                                        count <= 0;
                                         done <= 0;
+                                        hold <= 1;
                                 end else
                                 begin
                                         done <= 0;
                                         count <= count + 1;
+                                        hold <= 1;
                                 end
                         end else
                         begin
@@ -48,8 +55,9 @@ begin
                 end
         end else
         begin
-                count <= 0;
+                count <= -1;
                 done <= 0;
         end
+       end
 end
 endmodule
